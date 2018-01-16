@@ -25,6 +25,8 @@ class Base
 	
 	private TestMember testMember = new TestMember("Base");
 	
+	static Member member = new Member("Base");
+	
 	Base()
 	{
 		System.out.println("Base construct");
@@ -45,7 +47,7 @@ class Super extends Base
 		Base.InitTestString("super static block");
 	}
 	
-	static Member member = new Member();
+	static Member member = new Member("Super");
 	
 	private TestMember testMember = new TestMember("Super");
 	
@@ -65,12 +67,17 @@ class Member
 		Base.InitTestString("member static block");
 	}
 	
-	private TestMember testMember = new TestMember("Member");
 	
-	Member()
+	
+	private String msg;
+	
+	Member(String msg)
 	{
-		Base.InitTestString("member construct");
+		Base.InitTestString("member construct " + msg);
+		this.msg = msg;
 	}
+	
+	private TestMember testMember = new TestMember("Member in the " + msg);
 	
 }
 
