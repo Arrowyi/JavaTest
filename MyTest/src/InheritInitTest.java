@@ -17,15 +17,15 @@ public class InheritInitTest {
 class Base
 {
 	
-	static String sMsg = InitTestString("Base static member");
+	static String sMsg = InitTestString("Base");
 	
 	static {
-		System.out.println("Base static block");
+		System.out.println("static block of Base");
 	}
 	
 	private TestMember testMember = new TestMember("Base");
 	
-	static Member member = new Member("Base");
+	static StaticMember member = new StaticMember("Base");
 	
 	Base()
 	{
@@ -34,50 +34,50 @@ class Base
 	
 	static String InitTestString(String msg)
 	{
-		System.out.println(msg);
+		System.out.println("static local memeber of " + msg);
 		return msg;
 	}
 }
 
 class Super extends Base
 {
-	static String sSuperMsg = Base.InitTestString("super static memeber");
+	static String sSuperMsg = Base.InitTestString("super");
 	
 	static {
-		Base.InitTestString("super static block");
+		System.out.println("static block of Super");
 	}
 	
-	static Member member = new Member("Super");
+	static StaticMember member = new StaticMember("Super");
 	
 	private TestMember testMember = new TestMember("Super");
 	
 	Super()
 	{
-		Base.InitTestString("Super construct");
+		System.out.println("Super construct");
 	}
 	
 	
 }
 
-class Member
+class StaticMember
 {
-	static String sMemeberMsg = Base.InitTestString("member static member");
+	static String sMemeberMsg = Base.InitTestString("Static Member");
 	
 	static {
-		Base.InitTestString("member static block");
+		System.out.println("Static Member static block");
 	}
 	
 	
 	
 	private String msg;
 	
-	Member(String msg)
+	StaticMember(String msg)
 	{
-		Base.InitTestString("member construct " + msg);
+		System.out.println("Static Member construct of " + msg);
 		this.msg = msg;
 	}
 	
-	private TestMember testMember = new TestMember("Member in the " + msg);
+	private TestMember testMember = new TestMember("no static member in the static memeber of " + msg);
 	
 }
 
@@ -85,7 +85,7 @@ class TestMember
 {
 	TestMember(String msg)
 	{
-		Base.InitTestString("no static member construct in " + msg);
+		System.out.println("no static member construct in " + msg);
 	}
 }
 
