@@ -68,7 +68,7 @@ public class InnerClassForFactory {
 	}
 
 	public static void main(String[] args) {
-		playGame(Checkers.FACTORY);
+		playGame(Checkers.FACTORY);// May the parcelable be created like this.
 		playGame(Chess.FACTORY);
 	}
 }
