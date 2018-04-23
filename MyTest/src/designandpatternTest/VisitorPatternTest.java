@@ -1,28 +1,31 @@
 package designandpatternTest;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 public class VisitorPatternTest {
 	
+	//Visitor, visit different elements
 	private interface IconPicker
 	{
-		String pickIcon(D2IconMode im);
-		String pickIcon(D3IconMode im);
+		//method overwrite, so the element could call the same method name to dispatch the different class
+		//you could also make different method to handle different element.
+		void pickIcon(D2IconMode im);
+		void pickIcon(D3IconMode im);
 	}
 	
 	private static class SmartGasIconPicker implements IconPicker
 	{
 
 		@Override
-		public String pickIcon(D2IconMode im) {
-			return "smart gas 2d icon";
+		public void pickIcon(D2IconMode im) {
+			System.out.print("smart gas 2d icon");
 		}
 
 		@Override
-		public String pickIcon(D3IconMode im) {
-			return "smart gas 3d icon";
+		public void pickIcon(D3IconMode im) {
+			System.out.print("smart gas 3d icon");
 		}
 		
 	}
@@ -31,27 +34,29 @@ public class VisitorPatternTest {
 	{
 
 		@Override
-		public String pickIcon(D2IconMode im) {
-			return "smart parking 2d icon";
+		public void pickIcon(D2IconMode im) {
+			System.out.print("smart parking 2d icon");
 		}
 
 		@Override
-		public String pickIcon(D3IconMode im) {
-			return "smart parking 3d icon";
+		public void pickIcon(D3IconMode im) {
+			System.out.print("smart parking 3d icon");
 		}
 		
 	}
 	
+
 	private interface IconMode
 	{
-		String accept(IconPicker ip);
+		//the client call this method to dispatch different visitor to visit the element.
+		void accept(IconPicker ip);
 	}
 	
 	private static class D2IconMode implements IconMode
 	{
 		@Override
-		public String accept(IconPicker ip) {
-			return ip.pickIcon(this);
+		public void accept(IconPicker ip) {
+			ip.pickIcon(this);
 		}
 
 	}
@@ -59,15 +64,15 @@ public class VisitorPatternTest {
 	private static class D3IconMode implements IconMode
 	{
 		@Override
-		public String accept(IconPicker ip) {
-			return ip.pickIcon(this);
+		public void accept(IconPicker ip) {
+			ip.pickIcon(this);
 		}
 		
 	}
 	
 	public static void main(String[] args) {
 		
-		ArrayList<IconMode> imsList = new ArrayList<>();
+		List<IconMode> imsList = new ArrayList<>();
 		
 		imsList.add(new D2IconMode());
 		imsList.add(new D3IconMode());
@@ -77,6 +82,7 @@ public class VisitorPatternTest {
 		for(IconMode im : imsList)
 		{
 			im.accept(ip);
+			System.out.println();
 		}
 		
 		ip = new SmartParking();		
@@ -84,6 +90,7 @@ public class VisitorPatternTest {
 		for(IconMode im : imsList)
 		{
 			im.accept(ip);
+			System.out.println();
 		}
 		
 	}
