@@ -7,33 +7,26 @@ package FeatrueTest;
  * @author GBD_PC
  *
  */
-public class InheritInitTest {
-	
-	public static void main(String[] args)
-	{
-		Super superTest = new Super();
-	}
-}
 
 class Base
 {
 	
-	static String sMsg = InitTestString("Base static member");
+	static String sMsg = InitString("Base static string");
 	
 	static {
 		System.out.println("Base static block");
 	}
 	
-	private TestMember testMember = new TestMember("Base");
+	private Member member = new Member("Base");
 	
-	static Member member = new Member("Base");
+	static StaticMember sMember = new StaticMember("Base");
 	
 	Base()
 	{
 		System.out.println("Base construct");
 	}
 	
-	static String InitTestString(String msg)
+	static String InitString(String msg)
 	{
 		System.out.println(msg);
 		return msg;
@@ -42,51 +35,57 @@ class Base
 
 class Super extends Base
 {
-	static String sSuperMsg = Base.InitTestString("super static memeber");
+	static String sSuperMsg = Base.InitString("super static string");
 	
 	static {
-		Base.InitTestString("super static block");
+		Base.InitString("super static block");
 	}
 	
-	static Member member = new Member("Super");
+	static StaticMember member = new StaticMember("Super");
 	
-	private TestMember testMember = new TestMember("Super");
+	private Member testMember = new Member("Super");
 	
 	Super()
 	{
-		Base.InitTestString("Super construct");
+		Base.InitString("Super construct");
 	}
 	
+	
+}
+
+class StaticMember
+{
+	static String sMemeberMsg = Base.InitString("static member static string");
+	
+	static {
+		Base.InitString("static member static block");
+	}
+	
+	private String msg;
+	
+	StaticMember(String msg)
+	{
+		Base.InitString("static member construct in " + msg);
+		this.msg = msg;
+	}
+	
+	private Member testMember = new Member("static member with " + msg);
 	
 }
 
 class Member
 {
-	static String sMemeberMsg = Base.InitTestString("member static member");
-	
-	static {
-		Base.InitTestString("member static block");
-	}
-	
-	
-	
-	private String msg;
-	
 	Member(String msg)
 	{
-		Base.InitTestString("member construct " + msg);
-		this.msg = msg;
+		Base.InitString("member construct in " + msg);
 	}
-	
-	private TestMember testMember = new TestMember("Member in the " + msg);
-	
 }
 
-class TestMember
-{
-	TestMember(String msg)
+public class InheritInitTest {
+	
+	public static void main(String[] args)
 	{
-		Base.InitTestString("no static member construct in " + msg);
+		Super superTest = new Super();
 	}
 }
 
