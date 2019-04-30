@@ -1,5 +1,5 @@
 .metadata
-
+.vscode/
 bin/
 
 tmp/
@@ -15,12 +15,13 @@ tmp/
 local.properties
 
 .settings/
-
+target/
 .loadpath
 
 .recommenders
 
-
+.classpath
+.project
 
 # External tool builders
 
